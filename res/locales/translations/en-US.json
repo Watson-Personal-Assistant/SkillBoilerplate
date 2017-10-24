@@ -1,0 +1,7 @@
+{
+  "en-US": {
+    "translation": {
+      "WEATHER_CURRENT": "The current weather in %s is %d degrees celsius"
+    }
+  }
+}

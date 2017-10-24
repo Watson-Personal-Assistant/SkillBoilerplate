@@ -1,0 +1,303 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: Expertise REST API
+basePath: /v1/api
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+  /manifest:
+    x-swagger-router-controller: manifest
+    get:
+      tags: [Resources]
+      summary: Returns expertise manifest
+      description: Returns expertise manifest.
+      operationId: get
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ManifestResponse"
+        "404":
+          description: Not found
+
+  /nlu:
+    x-swagger-router-controller: nlu
+    get:
+      tags: [Resources]
+      summary: Return natural language understanding resource
+      description: Returns natural language undertsaning data for the specified
+        engine type.
+      operationId: get
+      parameters:
+        - name: type
+          in: query
+          description: The type of the engine data to acquire
+          required: true
+          enum: [wcs,regexp,apiai,nlc,rasa]
+          type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/NluResponse"
+        "404":
+          description: Not found
+
+  /intents:
+    x-swagger-router-controller: intents
+    get:
+      tags: [Resources]
+      summary: Return intents descriptors
+      description: ...
+      operationId: get
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/IntentsResponse"
+        "404":
+          description: Not found
+
+  /converse:
+    x-swagger-router-controller: converse
+    post:
+      tags: [Converse]
+      summary: Converse with expertise
+      description: Returns the expertise response to a user query
+      operationId: post
+      parameters:
+        - name: input
+          in: body
+          description: User query object.
+          required: true
+          schema:
+            $ref: '#/definitions/Converse'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ConverseResponse"
+
+  /healthcheck:
+    x-swagger-router-controller: healthcheck
+    get:
+      tags: [General]
+      summary: Expertise health check
+      description: Check if the experitse service is up or not
+      operationId: get
+      responses:
+        "200":
+          description: Success
+
+  /swagger:
+    x-swagger-pipe: swagger_raw
+
+# complex objects have schema definitions
+definitions:
+  ManifestResponse:
+    properties:
+      name:
+        type: string
+        example: 'hello-world'
+      description:
+        type: string
+        example: 'Boilerplate remote expertise description.'
+      private:
+        type: boolean
+        example: false
+      author:
+        type: string
+        example: Jordan Moore
+      version:
+        type: string
+        example: '0.0.1'
+      license:
+        type: string
+        example: 'Apache-2.0'
+      threshold:
+        type: integer
+        example: 0.85
+      languages:
+        type: array
+        items:
+          type: string
+        example: ['en-US']
+      nlu:
+        type: array
+        items:
+          type: string
+        example: ['regexp']
+      tags:
+        type: array
+        items:
+          type: string
+        example: ['hello world', 'tutorial']
+  NluResponse:
+    properties:
+      data:
+        type: object
+  IntentsResponse:
+    properties:
+      intent-name-1:
+        type: object
+        properties:
+          visibility:
+            type: string
+            example: 'always'
+          entities:
+            type: array
+            items:
+              type: string
+            example: ['sys-location', 'color']
+      intent-name-2:
+        type: object
+        properties:
+          visibility:
+            type: string
+            example: 'always'
+          entities:
+            type: array
+            items:
+              type: string
+            example: []
+  Converse:
+    description: Request to converse with an expertise. The expertise is provided with user intent, text, context, and user information in order to build a response.
+    required:
+      - id
+      - version
+      - language
+      - text
+      - retext
+      - attributes
+      - context
+    properties:
+      id:
+        type: string
+        example: '001'
+        description: id
+      version:
+        type: string
+        example: '1.0'
+        description: version
+      language:
+        type: string
+        example: 'en-US'
+        description: language
+      text:
+        type: string
+        example: 'Hello'
+        description: utterance
+      retext:
+        type: string
+        example: 'Hello'
+        description: retext
+      attributes:
+        type: object
+        description: attributes of the utterance
+        required:
+          - intent
+        properties:
+          intent:
+            type: string
+            example: 'hello-world'
+            description: intent that should match in actions.js file
+      context:
+        type: object
+        description: context of conversation
+        required:
+          - user
+          - session
+          - application
+        properties:
+          user:
+            type: object
+            required:
+              - id
+            properties:
+              id:
+                type: string
+                example: 'user-001'
+                description: unique id for an end user
+          session:
+            type: object
+            required:
+              - new
+              - attributes
+            properties:
+              id:
+                type: string
+                example: 'string'
+              new:
+                type: boolean
+                example: true
+              attributes:
+                type: object
+                example: {}
+              version:
+                type: string
+                example: '1.0'
+          application:
+            type: object
+            required:
+              - id
+              - attributes
+            properties:
+              id:
+                type: string
+                example: 'app-001'
+              attributes:
+                type: object
+                example: {}
+  ConverseResponse:
+    properties:
+      reject:
+        type: boolean
+        example: false
+      error:
+        type: integer
+        example: 200
+      shouldEndSession:
+        type: boolean
+        example: true
+      captureInput:
+        type: boolean
+        example: false
+      speech:
+        type: object
+        properties:
+          text:
+            type: string
+            example: 'Hello world'
+      context:
+        type: object
+        properties:
+          application:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 'app-001'
+              attributes:
+                type: object
+                example: {}
+          session:
+            type: object
+            properties:
+              id:
+                type: string
+                example: 'sessionid-001'
+              new:
+                type: boolean
+                example: true
+              attributes:
+                type: object
+                example: {}
+              version:
+                type: string
+                example: '1.0'
+          
