@@ -1,0 +1,13 @@
+{
+  "workspace": {
+    "en-US": {
+      "name": "your expertise name"
+    }
+  },
+  "credentials": {
+    "version" : "v1",
+    "version_date": "2017-04-21",
+    "password": "wcs-password",
+    "username": "wcs-username"
+  }
+}

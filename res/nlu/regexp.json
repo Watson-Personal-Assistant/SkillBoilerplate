@@ -1,0 +1,16 @@
+{
+  "intents" : [
+    {
+      "name" : ["hello-world"],
+      "grammar" : [
+        "Hello"
+      ]
+    }
+  ],
+
+  "entities" : {
+  },
+
+  "synonyms" : [
+  ]
+}

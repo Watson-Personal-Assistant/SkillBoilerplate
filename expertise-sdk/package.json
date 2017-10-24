@@ -1,0 +1,38 @@
+{
+  "name": "expertise-sdk",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sagan expertise software development kit",
+  "keywords": [],
+  "author": "Eyal Cohen",
+  "license": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.12.3",
+    "swagger-express-mw": "^0.7.0",
+    "bluebird": "^3.4.1",
+    "i18next": "^7.0.1",
+    "i18next-sprintf-postprocessor": "^0.2.2",
+    "morgan": "^1.8.1",
+    "cloudant": "^1.7.1",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "mocha": "^3.2.0",
+    "should": "^7.1.0",
+    "supertest": "^1.0.0"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "swagger project test"
+  },
+  "maintainers": [
+    {
+      "name": "Eyal Cohen",
+      "email": "eyalco@il.ibm.com"
+    }
+  ],
+  "engines": {
+    "node": "6.10.0"
+  }
+}
