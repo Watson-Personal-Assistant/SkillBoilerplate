@@ -35,26 +35,32 @@ app.use(morgan('short', {
 
 // Checks that the request for the expertise came from the core
 app.all('/*', function (req, res, next) {
-    let coreKey = "";
-    let valid = false;
-    let is_converse = (req.url.indexOf('converse') > 0);
-    let is_docs = (req.url.indexOf('api-docs') > 0);
-    // let is_manifest = (req.url.indexOf('manifest') > 0);
-    // let is_healthcheck = (req.url.indexOf('healthcheck') > 0);
-    if(is_converse || is_docs) {
-        coreKey = getKey(req);
-        valid = authenticate(coreKey);
+    // check only if defined to be a secured expertise
+    if (process.env.AUTHENTICATE_REQUESTS && JSON.parse(process.env.AUTHENTICATE_REQUESTS.toLowerCase())) {
+        let coreKey = "";
+        let valid = false;
+        let is_converse = (req.url.indexOf('converse') > 0);
+        let is_docs = (req.url.indexOf('api-docs') > 0);
+        // let is_manifest = (req.url.indexOf('manifest') > 0);
+        // let is_healthcheck = (req.url.indexOf('healthcheck') > 0);
+        if (is_converse || is_docs) {
+            coreKey = getKey(req);
+            valid = authenticate(coreKey);
+        }
+        else {
+            valid = true;
+        }
+        // check if key is in the list of key and is not undefined
+        // let is_manifest = req.url.indexOf('manifest');
+        if (!valid) {
+            logger.info('authentication failed, key: ' + coreKey + "\n request url: " + req.url);
+            res.send(401)
+        } else {
+            logger.info('authentication succeeded, key: ' + coreKey + "\n request url: " + req.url);
+            next();
+        }
     }
     else {
-        valid = true;
-    }
-    // check if key is in the list of key and is not undefined
-    // let is_manifest = req.url.indexOf('manifest');
-    if (!valid) {
-        logger.info('authentication failed, key: ' + coreKey + "\n request url: " + req.url);
-        res.send(401)
-    } else {
-        logger.info('authentication succeeded, key: ' + coreKey + "\n request url: " + req.url);
         next();
     }
 });
