@@ -403,7 +403,3 @@ Running all the tests:
 ```
 $ npm test
 ```
-
-## Maintainers
-
-Eyal Cohen - eyalco@il.ibm.com

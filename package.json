@@ -6,7 +6,7 @@
   "keywords": [
     "expertise"
   ],
-  "author": "Eyal Cohen <eyalco@il.ibm.com>",
+  "author": "your name",
   "license": "Apache-2.0",
   "main": "./index.js",
   "dependencies": {
