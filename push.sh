@@ -5,5 +5,5 @@
  SPACE="<project space name>"
  
   
-  cf target -s $SPACE
-  cf push -f $YML
+  bx target -s $SPACE
+  bx app push -f $YML

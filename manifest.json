@@ -2,7 +2,7 @@
   "name" : "BoilerPlateExpertise",
   "description": "Boilerplate remote expertise",
   "private": false,
-  "author" : "Offer Akrabi",
+  "author" : "your name",
   "version" : "0.0.1",
   "license" : "Apache-2.0",
   "threshold": 0.85,
