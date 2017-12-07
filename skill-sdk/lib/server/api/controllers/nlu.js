@@ -11,7 +11,7 @@ module.exports = {
 
 function get(req, res) {
   let type = req.swagger.params.type.value;
-  let file = `../../../../../../res/nlu/${type}.json`;
+  let file = `../../../../../res/nlu/${type}.json`;
   try {
     // Fore reload
     delete require.cache[require.resolve(file)];
