@@ -1,10 +1,10 @@
 {
-  "name": "BoilerplateExpertise",
+  "name": "BoilerplateSkill",
   "version": "1.0.0",
   "private": true,
-  "description": "Remote expertise boilerplate using contarct v1",
+  "description": "Remote skill boilerplate using contarct v1",
   "keywords": [
-    "expertise"
+    "skill"
   ],
   "author": "your name",
   "license": "Apache-2.0",
@@ -23,7 +23,10 @@
     "swagger-express-mw": "^0.7.0",
     "swagger-tools": "^0.10.1",
     "winston": "^2.3.1",
-    "watson-developer-cloud": "^2.4.3"
+    "watson-developer-cloud": "^2.4.3",
+    "inquirer" : "3.0.6",
+    "yamljs": "0.3.0",
+    "skill-sdk":"file:./skill-sdk"
   },
   "devDependencies": {
     "jscs": "^3.0.7",
@@ -34,6 +37,7 @@
   },
   "scripts": {
     "start": "node index.js",
+    "debug": "node $NODE_DEBUG_OPTION index.js",
     "test": "mocha 'test/**/*.js' && ./node_modules/jscs/bin/jscs . && ./node_modules/jshint/bin/jshint ."
   },
   "engines": {

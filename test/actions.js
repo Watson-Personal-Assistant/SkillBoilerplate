@@ -6,7 +6,7 @@
 
 const should = require('should');
 const request = require('supertest');
-const {server} = require('../expertise-sdk');
+const {server} = require('skill-sdk');
 
 // Bring the actions
 require('..');
@@ -51,7 +51,7 @@ describe('actions', function() {
           should.not.exist(err);
           res.body.should.have.property('speech');
           res.body.speech.text.should.match('Hello world');
-          res.body.should.have.property('shouldEndSession').which.be.exactly(true);
+          res.body.should.have.property('deleteSkillSession').which.be.exactly(true);
           done();
         });
     });

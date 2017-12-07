@@ -10,7 +10,7 @@ module.exports = {
 };
 
 function get(req, res) {
-  let file = `../../../../../res/nlu/intents.json`;
+  let file = `../../../../../../res/nlu/intents.json`;
   try {
     // Force reload
     delete require.cache[require.resolve(file)];

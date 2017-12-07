@@ -1,5 +1,5 @@
 {
-  "name": "expertise-sdk",
+  "name": "skill-sdk",
   "version": "1.0.0",
   "private": true,
   "description": "Sagan expertise software development kit",
@@ -28,8 +28,8 @@
   },
   "maintainers": [
     {
-      "name": "Eyal Cohen",
-      "email": "eyalco@il.ibm.com"
+      "name": "",
+      "email": ""
     }
   ],
   "engines": {

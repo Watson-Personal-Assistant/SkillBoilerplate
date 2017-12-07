@@ -11,7 +11,7 @@ const app = require('express')();
 const morgan = require('morgan');
 const logger = require('../logger');
 const fs = require('fs');
-const path = require('path')
+const path = require('path');
 const url = require('url');
 let querystring = require('querystring');
 
@@ -88,7 +88,7 @@ SwaggerExpress.create(config, function (err, swaggerExpress) {
 
 });
 let getKeys = function() {
-    return fs.readFileSync(path.join(__dirname, '../../../res/assets/keys.txt'), 'utf8', function(err, contents) {
+    return fs.readFileSync(path.join(process.cwd(), '/res/assets/keys.txt'), 'utf8', function(err, contents) {
         if(err){
             logger.info('could not read keys file, error: ' + err);
             return "";
