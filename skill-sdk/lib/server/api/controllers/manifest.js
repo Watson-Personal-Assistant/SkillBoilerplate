@@ -14,7 +14,7 @@ module.exports = {
 function get(req, res) {
   var manifest = {};
   try {
-    manifest = require('../../../../../manifest.json');
+    manifest = require('../../../../../../manifest.json');
     res.json(manifest);
   } catch (err) {
     logger.error('failed to load manifest');

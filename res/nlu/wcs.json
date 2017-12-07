@@ -1,13 +1,15 @@
 {
   "workspace": {
     "en-US": {
-      "name": "your expertise name"
+      "name": "your workspace name",
+      "workspace_id": "your workspace id"
     }
   },
   "credentials": {
-    "version" : "v1",
-    "version_date": "2017-04-21",
-    "password": "wcs-password",
-    "username": "wcs-username"
+    "url": "your wcs url",
+    "version": "your wcs version",
+    "version_date": "your wcs version date",
+    "password": "your wcs password",
+    "username": "your wcs username"
   }
 }

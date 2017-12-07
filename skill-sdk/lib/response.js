@@ -12,7 +12,7 @@ function Response(callback) {
   this.response = {
     reject: false,
     error: ErrorCodes.ok,
-    shouldEndSession: true,
+    deleteSkillSession: true,
     captureInput: false,
     speech: {
     },
@@ -62,8 +62,8 @@ Response.prototype.error = function(error) {
   return this;
 };
 
-Response.prototype.shouldEndSession = function(end = true) {
-  this.response.shouldEndSession = end;
+Response.prototype.deleteSkillSession = function(end = true) {
+  this.response.deleteSkillSession = end;
   return this;
 };
 
@@ -104,7 +104,7 @@ Response.prototype.send = function() {
 
 Response.prototype.end = function() {
   this.releaseInput();
-  this.shouldEndSession(true);
+  this.deleteSkillSession(true);
   return this.send();
 };
 

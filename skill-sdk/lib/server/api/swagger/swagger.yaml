@@ -1,7 +1,7 @@
 swagger: "2.0"
 info:
   version: "1.0.0"
-  title: Expertise REST API
+  title: Skill REST API
 basePath: /v1/api
 # format of bodies a client can send (Content-Type)
 consumes:
@@ -14,8 +14,8 @@ paths:
     x-swagger-router-controller: manifest
     get:
       tags: [Resources]
-      summary: Returns expertise manifest
-      description: Returns expertise manifest.
+      summary: Returns skill manifest
+      description: Returns skill manifest.
       operationId: get
       responses:
         "200":
@@ -67,8 +67,8 @@ paths:
     x-swagger-router-controller: converse
     post:
       tags: [Converse]
-      summary: Converse with expertise
-      description: Returns the expertise response to a user query
+      summary: Converse with skill
+      description: Returns the skill response to a user query
       operationId: post
       parameters:
         - name: input
@@ -87,7 +87,7 @@ paths:
     x-swagger-router-controller: healthcheck
     get:
       tags: [General]
-      summary: Expertise health check
+      summary: skill health check
       description: Check if the experitse service is up or not
       operationId: get
       responses:
@@ -106,7 +106,7 @@ definitions:
         example: 'hello-world'
       description:
         type: string
-        example: 'Boilerplate remote expertise description.'
+        example: 'Boilerplate remote skill description.'
       private:
         type: boolean
         example: false
@@ -166,7 +166,7 @@ definitions:
               type: string
             example: []
   Converse:
-    description: Request to converse with an expertise. The expertise is provided with user intent, text, context, and user information in order to build a response.
+    description: Request to converse with an skill. The skill is provided with user intent, text, context, and user information in order to build a response.
     required:
       - id
       - version

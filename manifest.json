@@ -1,6 +1,6 @@
 {
-  "name" : "BoilerPlateExpertise",
-  "description": "Boilerplate remote expertise",
+  "name" : "BoilerPlateSkill",
+  "description": "Boilerplate remote skill",
   "private": false,
   "author" : "your name",
   "version" : "0.0.1",
@@ -10,7 +10,7 @@
     "en-US"
   ],
   "nlu": [
-    "regexp"
+    "regexp", "wcs"
   ],
   "tags": [
     "hello world"
