@@ -6,7 +6,7 @@
 
 const should = require('should');
 const request = require('supertest');
-const {server} = require('./skill-sdk');
+const {server} = require('../skill-sdk');
 
 // Bring the actions
 require('..');
