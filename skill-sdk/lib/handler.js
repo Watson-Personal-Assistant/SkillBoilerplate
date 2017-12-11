@@ -44,7 +44,6 @@ Handler.prototype.handleRequest = function (request, callback) {
     }
     this.context.utterance = request.context.application.attributes;
     console.log(this.context.session);
-    // Restore private expertise context
     // Update language
     i18.changeLanguage(request.language);
     let response = new Response((err, result) => {
@@ -90,6 +89,13 @@ Handler.prototype.handleRequest = function (request, callback) {
     } catch (err) {
         callback('fail to run action or not exists');
     }
+};
+
+Handler.prototype.createActionsHandler = function (actions, state = 'DEFAULT') {
+    return {
+        actions: actions,
+        state: state
+    };
 };
 
 Handler.prototype.createActionsHandler = function (actions, state = 'DEFAULT') {
@@ -236,6 +242,7 @@ let setupWcs = function (self, wcsUrl, wcsUsername, wcsPassword, versionDate) {
         console.log(err);
         process.exit(0);
     }
+    logger.info('Successfully setup WCS credentials');
 };
 
 /**

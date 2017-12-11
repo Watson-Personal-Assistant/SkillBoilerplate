@@ -13,8 +13,12 @@
     "bluebird": "^3.4.1",
     "i18next": "^7.0.1",
     "i18next-sprintf-postprocessor": "^0.2.2",
+    "object-hash": "^1.1.8",
+    "numbered": "^1.0.0",
+    "promise-reflect": "^1.1.0",
     "morgan": "^1.8.1",
     "cloudant": "^1.7.1",
+    "xregexp": "^3.1.1",
     "winston": "^2.3.1"
   },
   "devDependencies": {
