@@ -14,6 +14,8 @@ const Conversation = require('watson-developer-cloud/conversation/v1');
 const Promise = require('bluebird');
 const fs = require('fs');
 const path = require('path');
+const async = require('async');
+
 
 let Handler = function () {
     this.states = {};
@@ -35,6 +37,8 @@ Handler.prototype.initialize = function () {
 
 Handler.prototype.handleRequest = function (request, callback) {
     logger.info('Request', {request});
+    this.context = {};
+    this.context.skill = {};
     // State and session context for short access
     this.state = request.context.session.attributes.state;
     this.context.session = request.context.session.attributes;
@@ -213,6 +217,65 @@ Handler.prototype.getFromSkillContext = function (varName) {
     else {
         return this.context.skill[varName];
     }
+};
+
+
+Handler.prototype.getIntent = function (request, cb) {
+
+    // Build the order
+    var tasks = [];
+    this.engines.forEach(nlu => {
+        tasks.push(callback => {
+            nlu.process(request, (err, result) => {
+                callback(null, result);
+            });
+        });
+    });
+    // Extract intent / entities and filter
+    async.parallel(tasks, (err, results) => {
+        results = results.filter(intentity => {
+            return this.filterIntent(request, intentity);
+        });
+        cb(null, results);
+    });
+};
+
+
+/**
+ * Filter intents based on intent type definitions. Function is a predicate, to test each
+ * intent. Return true to keep the element, false otherwise.
+ * Altough part of the filtering can be seen as nlu processing, it is currently not
+ * consider as such as the filtering doesn't mean extracting intent nor entities, just
+ * filtering between intents.
+ */
+Handler.prototype.filterIntent = function (request, intentity) {
+    // If no intents
+    if (intentity.intents.length === 0) {
+        return false;
+    }
+    // Intent confidence must be above expertise threshold
+    if (intentity.getIntentConfidence() < this.manifest.threshold) {
+        return false;
+    }
+    // Intents filtering
+    const intent = this.intents[intentity.getIntentName()];
+    if (intent !== undefined) {
+        // Visibility check
+        if (intent.visibility === 'hidden') {
+            return false;
+        }
+        // Entities fullfilment
+        if (intent.entities) {
+            for (const entity of intent.entities) {
+                if (entity.required) {
+                    if (!intentity.getEntity(entity.name)) {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+    return true;
 };
 
 module.exports = Handler;

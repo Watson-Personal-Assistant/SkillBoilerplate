@@ -10,7 +10,7 @@ const path = require('path');
 const logger = require('../logger');
 
 // Path to NLU engines
-const PATH = __dirname + 'bundles/engines';
+const PATH = __dirname + '/bundles/engines';
 
 // Get all supported NLU types. Currently we assume that if folder exists in
 // the PATH, the engine is valid and can be used.

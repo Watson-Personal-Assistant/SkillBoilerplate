@@ -13,7 +13,19 @@ module.exports = {
 
 function post(req, res) {
     const request = req.swagger.params.input.value;
-    handler.handleRequest(request, (err, result) => {
-        res.json(result);
+    handler.getIntent(request, (err, intentResult) => {
+        if (err) {
+            res.json(err);
+        }
+        else {
+            handler.handleRequest(request, (err, requestResult) => {
+                let result = {
+                    requestResult: requestResult,
+                    IntentConfidence: intentResult
+                };
+                console.log(result);
+                res.json(result);
+            });
+        }
     });
 }

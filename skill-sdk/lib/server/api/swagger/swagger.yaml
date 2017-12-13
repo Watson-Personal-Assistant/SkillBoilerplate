@@ -83,6 +83,26 @@ paths:
           schema:
             $ref: "#/definitions/ConverseResponse"
 
+  /evaluate:
+    x-swagger-router-controller: evaluate-request
+    post:
+      tags: [Evaluate]
+      summary: Evaluate request confidence
+      description: Returns the skill's confidence for this request
+      operationId: post
+      parameters:
+        - name: input
+          in: body
+          description: User query object.
+          required: true
+          schema:
+            $ref: '#/definitions/Converse'
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/ConverseResponse"
+
   /healthcheck:
     x-swagger-router-controller: healthcheck
     get:

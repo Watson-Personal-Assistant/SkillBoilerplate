@@ -28,18 +28,15 @@ class Factory {
      * @param  {string} name Expertise name
      * @return {Object}      NLU engine
      */
-    static create(url, type, name) {
+    static create(nlu) {
         return new Promise(function (resolve, reject) {
+            let type = nlu.type;
             if (getSupported().indexOf(type) !== -1) {
-                const Nlu = require(`bundles/engines/${type}/nlu`);
-                const engineData = require(`../../res/nlu/${type}.json`);
-                const engine = new Nlu(name);
-                if (Nlu)
-                    engine.init(engineData).then(resolve).catch(reject);
-            }
-            else {
+                const Nlu = require(`../../bundles/nlu/${type}/nlu`);
+                const engine = new Nlu(nlu.name);
+                engine.init(nlu).then(resolve).catch(reject);
+            } else {
                 // Not a valid NLU type
-                logger.warn(`Invalid nlu ${type} type for ${name} skill`);
                 reject(errors.invalidNLUType);
             }
         });
@@ -55,9 +52,10 @@ class Factory {
      * @param  {string} name Expertise name
      * @return {Array}       Created NLU engines. Empty if no engine was created.
      */
-    static createAll(url, types, name) {
+    static createAll(types) {
         return new Promise(function (resolve, reject) {
             var promises = [];
+
             // Use supported if not defined. Type will be validate on create.
             if (types === undefined) {
                 logger.warn(`${name} doesn't specify nlu types`);
@@ -65,7 +63,7 @@ class Factory {
             }
 
             types.forEach(function (type) {
-                promises.push(Factory.create(url, type, name));
+                promises.push(Factory.create(type));
             });
             Promise.all(promises.map(reflect)).then(function (results) {
                 const engines = [];
@@ -77,5 +75,6 @@ class Factory {
         });
     }
 }
+
 
 module.exports = Factory;

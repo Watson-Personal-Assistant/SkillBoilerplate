@@ -8,6 +8,7 @@
   "license": "",
   "main": "index.js",
   "dependencies": {
+    "async": "2.0.0-rc.6",
     "express": "^4.12.3",
     "swagger-express-mw": "^0.7.0",
     "bluebird": "^3.4.1",
