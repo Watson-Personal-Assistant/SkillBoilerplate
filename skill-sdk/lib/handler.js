@@ -258,7 +258,7 @@ Handler.prototype.filterIntent = function (request, intentity) {
         return false;
     }
     // Intents filtering
-    const intent = this.intents[intentity.getIntentName()];
+    const intent = this.manifest.intents[intentity.getIntentName()];
     if (intent !== undefined) {
         // Visibility check
         if (intent.visibility === 'hidden') {

@@ -13,7 +13,7 @@ module.exports = {
 };
 
 function post(req, res) {
-    if (manifest.nlu.indexOf('skill') > -1) {
+    if (req.response) {
         res.json(req.response);
     }
     else {

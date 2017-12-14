@@ -5,7 +5,7 @@
 
 'use strict';
 
-const	Workspace = require('./workspace');
+const Workspace = require('./workspace');
 const Base = require('../../../nlu');
 const Intentity = require('../../../intentity');
 const logger = require('../../../../logger');

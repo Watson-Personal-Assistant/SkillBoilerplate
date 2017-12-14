@@ -155,7 +155,7 @@ Workspace.prototype.listWorkspaces = function() {
   return new Promise((resolve, reject) => {
     this.wcs.listWorkspaces({}, (err, result) => {
       if (err) {
-        reject();
+        reject(err);
       } else {
         resolve(result);
       }

@@ -10,7 +10,7 @@
     "en-US"
   ],
   "nlu": [
-    "regexp", "skill"
+    "skill", "regexp"
   ],
   "tags": [
     "hello world"
