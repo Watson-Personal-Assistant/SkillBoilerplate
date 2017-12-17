@@ -7,7 +7,6 @@
 
 const i18 = require('i18next');
 const sprintf = require('i18next-sprintf-postprocessor');
-const Request = require('./request');
 const Response = require('./response');
 const logger = require('./logger');
 const Conversation = require('watson-developer-cloud/conversation/v1');
@@ -23,8 +22,6 @@ let Handler = function () {
  * Initializes the handler, sets up the connection to wcs
  */
 Handler.prototype.initialize = function () {
-    this.context = {};
-    this.context.skill = {};
     let rawJson = fs.readFileSync(path.join(process.cwd(), '/res/nlu') + '/wcs.json');
     this.wcsCredentials = JSON.parse(rawJson);
     if (this.wcsCredentials) {
@@ -36,24 +33,25 @@ Handler.prototype.initialize = function () {
 Handler.prototype.handleRequest = function (request, callback) {
     logger.info('Request', {request});
     // State and session context for short access
-    this.state = request.context.session.attributes.state;
-    this.context.session = request.context.session.attributes;
-    if(request.context.session.skill) {
-        this.context.skill = request.context.session.skill.attributes ?
-            request.context.session.skill.attributes : this.context.skill;
+    let skillContext = {};
+    if(request.context.session.skill && request.context.session.skill.attributes) {
+        skillContext = request.context.session.skill.attributes;
     }
-    this.context.utterance = request.context.application.attributes;
-    console.log(this.context.session);
-    // Restore private expertise context
+    let context = {
+        utterance: request.context.application.attributes,
+        session: request.context.session.attributes,
+        skill: skillContext
+    };
+    this.state = request.context.session.attributes.state;
     // Update language
     i18.changeLanguage(request.language);
     let response = new Response((err, result) => {
         request.context.session.attributes.state = this.state;
         let sessionContext = {
             skill: {
-                attributes: this.context.skill
+                attributes: context.skill
             },
-            attributes: this.context.session
+            attributes: context.session
         };
         // Returned context
         Object.assign(response.response, {
@@ -77,7 +75,7 @@ Handler.prototype.handleRequest = function (request, callback) {
             const action = this.states[state].actions[intent] ||
                 this.states[state].actions.unhandled;
             // Run action
-            action(request, response);
+            action(request, response, context);
             // Update state
             this.state = response.state || this.state;
             // Next state or stop (we have the response)
@@ -134,13 +132,13 @@ Handler.prototype.registerLanguages = function (languages) {
  * @param response - the response variable
  * @param callback - callback function to handle the result from wcs
  */
-Handler.prototype.converse = function (request, response, callback) {
-    callConversation(this, request).then(result => {
+Handler.prototype.converse = function (request, response, context, callback) {
+    callConversation(this, request, context.skill).then(result => {
         // Save the context of the watson conversation service
-        this.context.skill = result.context;
-        callback(result, response, undefined);
+        context.skill = result.context;
+        callback(result, response, context, undefined);
     }).catch(err => {
-        callback(undefined, response, err);
+        callback(undefined, response, context, err);
     });
 };
 
@@ -159,56 +157,6 @@ Handler.prototype.t = function (text) {
     }
     return text;
 };
-
-/**
- * Add variable to context
- * @param varName - name of your context variable
- * @param value - value of the the context variable
- */
-Handler.prototype.addToSkillContext = function (varName, value) {
-    if (!this.context.skill) {
-        this.context.skill = {};
-    }
-    this.context.skill[varName] = value;
-    logger.info('Saved ' + varName + ' to context');
-};
-
-/**
- * Delete a variable from the context
- * @param varName - name of the variable to delete
- */
-Handler.prototype.removeFromSkillContext = function (varName) {
-    if (!this.context.skill || !this.context.skill[varName]) {
-        logger.info('Could not remove variable, it does not exist');
-    }
-    else {
-        this.context.skill[varName] = undefined;
-        logger.info('Deleted ' + varName + ' from context');
-    }
-};
-/**
- * Clear the context
- */
-Handler.prototype.clearSkillContext = function () {
-    this.context.skill = {};
-    logger.info('Context Cleared');
-};
-
-
-/**
- * Get the value of a variable from the context
- * @param varName - the name of the variable requested from the context
- * @returns the value of varName in the context
- */
-Handler.prototype.getFromSkillContext = function (varName) {
-    if (!this.context.skill || !this.context.skill[varName]) {
-        logger.info('Could not get variable ' + varName + ' from context, it does not exist')
-    }
-    else {
-        return this.context.skill[varName];
-    }
-};
-
 module.exports = Handler;
 
 /**
@@ -241,11 +189,11 @@ let setupWcs = function (self, wcsUrl, wcsUsername, wcsPassword, versionDate) {
 /**
  * a helper function for conversing with wcs
  */
-let callConversation = function (self, request) {
+let callConversation = function (self, request, skillContext) {
     let language = Object.keys(self.wcsCredentials.workspace)[0];
     const payload = {
         workspace_id: self.wcsCredentials.workspace[language].workspace_id,
-        context: self.context.skill,
+        context: skillContext,
         input: {text: request.retext}
     };
     // Send the input to the conversation service and return the answer to the callback function
