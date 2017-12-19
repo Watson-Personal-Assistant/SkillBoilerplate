@@ -42,7 +42,7 @@ let converseCallback = function (result, response, context, err) {
         // example of adding a card
         // example of a card sent to the application, the action and the json most of the time will come from WCS
         response.card('some action', {"some": "json"});
-        response.say(result.output.text, 'random').deleteSkillSession(deleteSkillSession).send();
+        response.say(result.output.text).deleteSkillSession(deleteSkillSession).send();
     }
 };
 

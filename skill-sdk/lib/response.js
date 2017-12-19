@@ -21,19 +21,9 @@ function Response(callback) {
   };
 }
 
-Response.prototype.say = function(text, selection = 'random') {
+Response.prototype.say = function(text) {
   if (text instanceof Array) {
-    if (typeof selection === 'string') {
-      switch (selection) {
-      case 'random':
-        selection = Math.floor(Math.random() * text.length);
-      break;
-      default:
-        selection = 0;
-      break;
-    }
-    }
-    this.response.speech.text = text[selection];
+    this.response.speech.text = text.toString();
   } else {
     if (this.response.speech.text) {
       this.response.speech.text = this.response.speech.text + ' ' + text;
