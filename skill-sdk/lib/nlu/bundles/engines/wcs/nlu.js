@@ -72,14 +72,14 @@ class Nlu extends Base {
   load(resource, force, cb) {
     // Bind to existing workspace or create new one with specified content
     Object.keys(resource.workspace).forEach(language => {
-      if (resource.workspace[language].name) {
-        const name = resource.workspace[language].name;
+      if (resource.workspace[language].workspace_id) {
+        const workspaceID = resource.workspace[language].workspace_id;
         this.workspace[language] = new Workspace(resource.credentials);
-        this.workspace[language].bind(name, (err, result) => {
+        this.workspace[language].bind(workspaceID, (err, result) => {
           if (err) {
-            logger.error(`Failed to load wcs ${language} workspace ${name}`);
+            logger.error(`Failed to load wcs ${language} workspace ${workspaceID}`);
           } else {
-            logger.info(`Load wcs ${language} workspace ${name}`);
+            logger.info(`Load wcs ${language} workspace ${workspaceID}`);
           }
           cb(err, result);
         });

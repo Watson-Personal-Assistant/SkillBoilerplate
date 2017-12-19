@@ -53,9 +53,9 @@ Workspace.prototype.process = function(text, cb) {
  * Bind conversation workspace. Search for workspace by name. When calling
  * the bind function we assume that the workspace exists in the service.
  */
-Workspace.prototype.bind = function(name, cb) {
+Workspace.prototype.bind = function(id, cb) {
   this.listWorkspaces().then(result => {
-    const workspace = result.workspaces.find(workspace => workspace.name === name);
+    const workspace = result.workspaces.find(workspace => workspace.workspace_id === id);
     if (workspace) {
       this.workspaceId = workspace.workspace_id;
       cb();

@@ -159,6 +159,64 @@ Handler.prototype.t = function (text) {
     }
     return text;
 };
+
+Handler.prototype.getIntent = function (request, cb) {
+
+    // Build the order
+    var tasks = [];
+    this.engines.forEach(nlu => {
+        tasks.push(callback => {
+            nlu.process(request, (err, result) => {
+                callback(null, result);
+            });
+        });
+    });
+    // Extract intent / entities and filter
+    async.parallel(tasks, (err, results) => {
+        results = results.filter(intentity => {
+            return this.filterIntent(request, intentity);
+        });
+        cb(null, results);
+    });
+};
+
+
+/**
+ * Filter intents based on intent type definitions. Function is a predicate, to test each
+ * intent. Return true to keep the element, false otherwise.
+ * Altough part of the filtering can be seen as nlu processing, it is currently not
+ * consider as such as the filtering doesn't mean extracting intent nor entities, just
+ * filtering between intents.
+ */
+Handler.prototype.filterIntent = function (request, intentity) {
+    // If no intents
+    if (intentity.intents.length === 0) {
+        return false;
+    }
+    // Intent confidence must be above expertise threshold
+    if (intentity.getIntentConfidence() < this.manifest.threshold) {
+        return false;
+    }
+    // Intents filtering
+    const intent = this.manifest.intents[intentity.getIntentName()];
+    if (intent !== undefined) {
+        // Visibility check
+        if (intent.visibility === 'hidden') {
+            return false;
+        }
+        // Entities fullfilment
+        if (intent.entities) {
+            for (const entity of intent.entities) {
+                if (entity.required) {
+                    if (!intentity.getEntity(entity.name)) {
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+    return true;
+};
 module.exports = Handler;
 
 /**

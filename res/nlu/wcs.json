@@ -1,15 +1,14 @@
 {
   "workspace": {
     "en-US": {
-      "name": "small-talk",
-      "workspace_id": "7f73054d-ebb7-4a21-8682-e3446a18f5b1"
+      "workspace_id": "your workspace id"
     }
   },
   "credentials": {
-    "url": "https://gateway.watsonplatform.net/conversation/api",
-    "version": "v1",
-    "version_date": "2017-04-21",
-    "password": "n4Gn4WsbQWWI",
-    "username": "40f1d212-0e1d-4f00-aa20-3548d7f2bb61"
+    "url": "your wcs url",
+    "version": "your wcs version",
+    "version_date": "your wcs version date",
+    "password": "your wcs password",
+    "username": "yor wcs username"
   }
 }
