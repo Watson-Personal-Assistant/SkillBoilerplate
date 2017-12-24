@@ -31,11 +31,6 @@ Response.prototype.say = function(text, selection = 'all') {
                     res = text[selection];
                     break;
                 case 'all':
-                    for(let answer in res) {
-                      if(answer === "") {
-                        res.splice(answer, 1);
-                      }
-                    }
                     res = text.toString();
                     break;
                 default:
