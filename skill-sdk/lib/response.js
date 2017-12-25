@@ -34,7 +34,7 @@ Response.prototype.say = function(text, selection = 'all') {
                     res = text.toString();
                     break;
                 default:
-                    res = text;
+                    res = text[0];
                     break;
             }
         }
