@@ -21,27 +21,32 @@ function Response(callback) {
   };
 }
 
-Response.prototype.say = function(text, selection = 'random') {
-  if (text instanceof Array) {
-    if (typeof selection === 'string') {
-      switch (selection) {
-      case 'random':
-        selection = Math.floor(Math.random() * text.length);
-      break;
-      default:
-        selection = 0;
-      break;
-    }
-    }
-    this.response.speech.text = text[selection];
-  } else {
-    if (this.response.speech.text) {
-      this.response.speech.text = this.response.speech.text + ' ' + text;
+Response.prototype.say = function(text, selection = 'all') {
+    if (text instanceof Array) {
+        if (typeof selection === 'string') {
+          let res;
+            switch (selection) {
+                case 'random':
+                    selection = Math.floor(Math.random() * text.length);
+                    res = text[selection];
+                    break;
+                case 'all':
+                    res = text.toString();
+                    break;
+                default:
+                    res = text[0];
+                    break;
+            }
+        }
+        this.response.speech.text = res;
     } else {
-      this.response.speech.text = text;
+        if (this.response.speech.text) {
+            this.response.speech.text = this.response.speech.text + ' ' + text;
+        } else {
+            this.response.speech.text = text;
+        }
     }
-  }
-  return this;
+    return this;
 };
 
 Response.prototype.expressiveness = function(expressiveness = 'normal') {
