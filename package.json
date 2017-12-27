@@ -12,7 +12,7 @@
   "dependencies": {
     "dotenv": "^4.0.0",
     "inquirer": "3.0.6",
-    "skill-sdk-nodejs": "0.0.6",
+    "skill-sdk-nodejs": "0.0.x",
     "yamljs": "0.3.0"
   },
   "devDependencies": {
