@@ -9,8 +9,8 @@
 require('dotenv').config();
 
 // Initialize handler
-const {handler} = require('./skill-sdk');
-const manifest = require('./manifest.json');
+const {handler} = require('skill-sdk-nodejs');
+const manifest = require('./res/assets/manifest.json');
 if(manifest.nlu.indexOf('wcs') > -1) {
     handler.initialize();
 }

@@ -6,7 +6,7 @@
 'use strict';
 
 // The expertise handler
-const {handler} = require('./skill-sdk');
+const {handler} = require('skill-sdk-nodejs');
 
 // Expertise translations map
 const languageResource = {
