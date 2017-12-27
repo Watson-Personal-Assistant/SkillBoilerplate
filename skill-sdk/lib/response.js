@@ -23,8 +23,8 @@ function Response(callback) {
 
 Response.prototype.say = function(text, selection = 'all') {
     if (text instanceof Array) {
+        let res = text[0];
         if (typeof selection === 'string') {
-          let res;
             switch (selection) {
                 case 'random':
                     selection = Math.floor(Math.random() * text.length);
@@ -34,7 +34,6 @@ Response.prototype.say = function(text, selection = 'all') {
                     res = text.toString();
                     break;
                 default:
-                    res = text[0];
                     break;
             }
         }
