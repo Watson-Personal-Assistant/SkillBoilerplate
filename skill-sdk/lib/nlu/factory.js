@@ -32,7 +32,7 @@ class Factory {
         return new Promise(function (resolve, reject) {
             let type = nlu.type;
             if (getSupported().indexOf(type) !== -1) {
-                let path = `./bundles/engines/${type}/nlu`;
+                let path = process.cwd() + `/res/nlu/engines/${type}/nlu`;
                 const Nlu = require(path);
                 const engine = new Nlu(nlu.name);
                 engine.init(nlu).then(resolve).catch(reject);

@@ -7,7 +7,7 @@
 
 const watson = require('watson-developer-cloud');
 const hash = require('object-hash');
-const logger = require('../../../../logger');
+const logger = require('../../../../skill-sdk/lib/logger');
 
 var Workspace = function (credentials) {
 

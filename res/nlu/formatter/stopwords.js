@@ -6,7 +6,7 @@
 'use strict';
 
 const util = require('util');
-const Super = require('../../../formatter/formatter');
+const Super = require('../../../skill-sdk/lib/formatter/formatter');
 
 /**
  * Based on http://xpo6.com/list-of-english-stop-words/

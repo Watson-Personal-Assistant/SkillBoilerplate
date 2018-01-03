@@ -6,11 +6,7 @@
 'use strict';
 
 const util = require('util');
-const Super = require('../../../formatter/formatter');
-
-const map = {
-  'thx': 'thanks'
-};
+const Super = require('../../../skill-sdk/lib/formatter/formatter');
 
 var Formatter = function() {
   Super.apply(this, arguments);
@@ -20,10 +16,9 @@ var Formatter = function() {
 util.inherits(Formatter, Super);
 
 Formatter.prototype.replace = function(text) {
-    for (const key in map) {
-      text = text.replace(key, map[key]);
-    }
-    return text;
-  };
+  // Remove punctuation (/[.,\/#!$%\^&\*;:{}=\-_`~()]/)
+  text = text.replace(/['.,;!'\"\?]/g, '');
+  return text;
+};
 
 module.exports = new Formatter();

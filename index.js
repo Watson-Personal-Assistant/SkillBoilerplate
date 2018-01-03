@@ -20,8 +20,7 @@ if(manifest.nlu.indexOf('wcs') > -1) {
 }
 //in case the nlu is handled in the skill - create nlu engines
 let index = manifest.nlu.indexOf('skill');
-let newManifest = Object.create(manifest);
-newManifest.nlu = Object.create(manifest.nlu);
+let newManifest = JSON.parse(JSON.stringify(manifest));
 newManifest.nlu.splice(index, 1);
 if(index > -1) {
     factory.getNLUs(newManifest).then(updatedManifest => {

@@ -6,9 +6,9 @@
 'use strict';
 
 const Workspace = require('./workspace');
-const Base = require('../../../nlu');
-const Intentity = require('../../../intentity');
-const logger = require('../../../../logger');
+const Base = require('../../../node_modules/skill-sdk/lib/nlu/nlu');
+const Intentity = require('../../../node_modules/skill-sdk/lib/nlu/intentity');
+const logger = require('../../../node_modules/skill-sdk/lib/logger');
 
 class Nlu extends Base {
 
