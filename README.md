@@ -31,7 +31,7 @@ in your key.txt file to the header (you can also create a new key).
 
 ## JSON Interface Reference
 
-### [Manifest](./manifest.json)
+### [Manifest](res/assets/manifest.json)
 
 This section defines the skill configuration which is used by the core to access and control the skill.
 

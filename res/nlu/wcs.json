@@ -1,6 +1,7 @@
 {
   "workspace": {
     "en-US": {
+      "name": "your workspace name",
       "workspace_id": "your workspace id"
     }
   },
@@ -9,6 +10,6 @@
     "version": "your wcs version",
     "version_date": "your wcs version date",
     "password": "your wcs password",
-    "username": "yor wcs username"
+    "username": "your wcs username"
   }
 }
