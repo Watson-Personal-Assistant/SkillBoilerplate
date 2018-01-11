@@ -8,7 +8,7 @@
 // Initialize handler
 const {handler} = require('skill-sdk-nodejs');
 const manifest = require('./res/assets/manifest.json');
-const {factory} = require('skill-sdk-nodejs');
+const factory = require('skill-sdk-nodejs').factory;
 
 // Expertise configuration
 require('dotenv').config();
