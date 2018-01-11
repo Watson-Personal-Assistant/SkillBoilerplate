@@ -1,0 +1,18 @@
+{
+  "name" : "BoilerPlateSkill",
+  "description": "Boilerplate remote skill",
+  "private": false,
+  "author" : "your name",
+  "version" : "0.0.1",
+  "license" : "Apache-2.0",
+  "threshold": 0.85,
+  "languages": [
+    "en-US"
+  ],
+  "nlu": [
+    "regexp", "wcs"
+  ],
+  "tags": [
+    "hello world"
+  ]
+}
