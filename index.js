@@ -6,13 +6,13 @@
 'use strict';
 
 // Initialize handler
-const {handler} = require('./');
+const {handler} = require('skill-sdk-nodejs');
 const manifest = require('./res/assets/manifest.json');
+const {factory} = require('skill-sdk-nodejs');
 
 // Expertise configuration
 require('dotenv').config();
 
-const factory = require('./lib/nlu').factory;
 
 //initialize wcs in handler
 if(manifest.nlu.indexOf('wcs') > -1) {

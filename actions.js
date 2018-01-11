@@ -6,7 +6,7 @@
 'use strict';
 
 // The expertise handler
-const {handler} = require('./');
+const {handler} = require('skill-sdk-nodejs');
 
 const evaluation = 'evaluation';
 const entities = 'entities';
