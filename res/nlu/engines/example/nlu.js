@@ -15,6 +15,12 @@ class Nlu extends Base {
         super(name);
     }
 
+    /**
+     * Initializes the nlu engine
+     * @param resource - the content of the nlu configuration file found int res/nlu
+     * @param force - ?
+     * @returns {Promise<any>}
+     */
     init(resource, force) {
         let self = this;
         return new Promise((resolve, reject) => {
@@ -22,6 +28,15 @@ class Nlu extends Base {
         })
     }
 
+    /**
+     * evaluation function - is used to evaluate a request, this function will be called automatically by the skill
+     * handler during the request evaluation
+     * @param request - the request sent to the skill (usually by WA)
+     * @param cb - is expected to be called with the following parameters:
+     *             1. err
+     *             2. an intentity object
+     *             3. output/response - this is optional, this could save a call to the nlu in the actions.js file
+     */
     evaluate(request, cb) {
         let confidence = request.retext === 'hello' ? 1 : 0;
         let chosenIntent = confidence === 1 ? 'hello-world' : undefined;
