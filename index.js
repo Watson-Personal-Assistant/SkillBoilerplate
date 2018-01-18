@@ -18,9 +18,9 @@ require('dotenv').config();
 if(manifest.nlu.indexOf('wcs') > -1) {
     handler.initialize();
 }
-//in case the nlu is handled in the skill - create nlu engines
-let index = manifest.nlu.indexOf('skill');
 let newManifest = JSON.parse(JSON.stringify(manifest));
+//in case the nlu is handled in the skill - create nlu engines
+let index = newManifest.nlu.indexOf('skill');
 newManifest.nlu.splice(index, 1);
 if(index > -1) {
     if(newManifest.nlu.length < 1) {
