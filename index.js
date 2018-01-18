@@ -23,15 +23,20 @@ let index = manifest.nlu.indexOf('skill');
 let newManifest = JSON.parse(JSON.stringify(manifest));
 newManifest.nlu.splice(index, 1);
 if(index > -1) {
-    factory.getNLUs(newManifest).then(updatedManifest => {
-        if(updatedManifest.nlu.regexp) {
-            updatedManifest.intents = require('./res/nlu/intents');
-        }
-        handler.manifest = updatedManifest;
-        factory.createAll(updatedManifest).then(function (engines) {
-            handler.engines = engines;
+    if(newManifest.nlu.length < 1) {
+        console.log('No Nlu engines selected, you need to add the nlu engines you want to use to manifest.nlu (along with "skill") ')
+    }
+    else {
+        factory.getNLUs(newManifest).then(updatedManifest => {
+            if (updatedManifest.nlu.regexp) {
+                updatedManifest.intents = require('./res/nlu/intents');
+            }
+            handler.manifest = updatedManifest;
+            factory.createAll(updatedManifest).then(function (engines) {
+                handler.engines = engines;
+            });
         });
-    });
+    }
 }
 
 // The expertise handler
