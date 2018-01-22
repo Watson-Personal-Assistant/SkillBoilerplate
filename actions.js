@@ -59,7 +59,7 @@ let converseCallback = function (result, response, context, err) {
  *      response: {
  *          responseCode - status of the evaluation request
  *          requestResult - the response of the nlu engine
- *          intentConfidence - the intentity object which holds the confidence for each intent/entity
+ *          entities - the intentity object which holds the confidence for each intent/entity
  *          handleUtterance - a boolean which tells WA whether the skill would like to handle this request
  *          context - the context after the evaluation request
   *     }
