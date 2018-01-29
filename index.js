@@ -5,14 +5,38 @@
 
 'use strict';
 
+// Initialize handler
+const {handler} = require('skill-sdk-nodejs');
+const manifest = require('./res/assets/manifest.json');
+const factory = require('skill-sdk-nodejs').factory;
+
 // Expertise configuration
 require('dotenv').config();
 
-// Initialize handler
-const {handler} = require('./skill-sdk');
-const manifest = require('./manifest.json');
+
+//initialize wcs in handler
 if(manifest.nlu.indexOf('wcs') > -1) {
     handler.initialize();
+}
+let newManifest = JSON.parse(JSON.stringify(manifest));
+//in case the nlu is handled in the skill - create nlu engines
+let index = newManifest.nlu.indexOf('skill');
+newManifest.nlu.splice(index, 1);
+if(index > -1) {
+    if(newManifest.nlu.length < 1) {
+        console.log('No Nlu engines selected, you need to add the nlu engines you want to use to manifest.nlu (along with "skill") ')
+    }
+    else {
+        factory.getNLUs(newManifest).then(updatedManifest => {
+            if (updatedManifest.nlu.regexp) {
+                updatedManifest.intents = require('./res/nlu/intents');
+            }
+            handler.manifest = updatedManifest;
+            factory.createAll(updatedManifest).then(function (engines) {
+                handler.engines = engines;
+            });
+        });
+    }
 }
 
 // The expertise handler

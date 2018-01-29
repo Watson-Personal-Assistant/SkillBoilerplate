@@ -1,0 +1,7 @@
+{
+  "intents" : [
+    {
+      "name" : ["hello-world"]
+    }
+  ]
+}
