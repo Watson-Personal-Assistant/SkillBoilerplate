@@ -34,6 +34,7 @@ const languageResource = {
  * @param context - variable holding the utterance, session and updated skill context
  * @param err - error description in case of an error, otherwise undefined
  */
+
 let converseCallback = function (result, response, context, err) {
     // this variable would preferably come from your wcs and decide whether the session has ended
     let deleteSkillSession = false;
