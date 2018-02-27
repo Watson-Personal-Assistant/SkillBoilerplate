@@ -1,5 +1,4 @@
 {
-  "name" : "BoilerPlateSkill",
   "description": "Boilerplate remote skill",
   "private": false,
   "author" : "your name",
@@ -10,7 +9,7 @@
     "en-US"
   ],
   "nlu": [
-    "regexp", "wcs","skill"
+    "skill", "regexp"
   ],
   "tags": [
     "hello world"
