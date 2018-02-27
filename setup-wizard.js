@@ -185,7 +185,6 @@ inquirer.prompt(questions).then(function(response) {
     if(response.pushScript) {
         let organization = response.organization;
         let spaceName = response.spaceName;
-        let domnainName = response.domainName;
         let manifestYaml = yaml.load('manifest.yml');
         manifestYaml.applications[0].name = skillName;
         manifestYaml.applications[0].host = response.hostName;
