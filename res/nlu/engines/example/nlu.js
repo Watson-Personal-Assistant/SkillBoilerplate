@@ -35,7 +35,12 @@ class Nlu extends Base {
      * @param cb - is expected to be called with the following parameters:
      *             1. err
      *             2. an intentity object
-     *             3. output/response - this is optional, this could save a call to the nlu in the actions.js file
+     *             3. output/response - this is optional, this could save a call to the nlu in the actions.js file,
+     *             it needs to be and object with the following structure:
+     *             {
+     *              text: "string",
+     *              context: {}
+     *             }
      */
     evaluate(request, cb) {
         let confidence = request.retext === 'hello' ? 1 : 0;
