@@ -203,7 +203,23 @@ inquirer.prompt(questions).then(function(response) {
             }
             console.log('Push script saved');
         });
+
     }
+
+    fs.readFile('package.json', 'utf8', function (err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        let packageJSON = JSON.parse(data);
+        packageJSON.name = skillName;
+        packageJSON.author = author;
+        fs.writeFile('package.json', JSON.stringify(packageJSON, null, 2), function (err) {
+            if (err) {
+                return console.log(err);
+            }
+            console.log('package.json saved');
+        });
+    });
 
     setTimeout(function() {
         console.log('\n-----------  Your skill is ready to go!  ------------\n');
