@@ -100,7 +100,7 @@ const stateDefaultActions = handler.createActionsHandler({
     evaluation: (request, evaluationResponse, context) => {
         handler.evaluateRequest(request, evaluationResponse, context, evaluationCallback);
     },
-    // pre processing for entity based routing
+    // this is the entities action, routing by entity will lead here
     entities: (request, response, context) => {
         handler.converse(request, response, context, converseCallback);
     }
