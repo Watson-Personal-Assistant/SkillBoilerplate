@@ -1,0 +1,17 @@
+{
+  "tests":
+  [
+    {
+    "utterance": "Hello",
+    "intent" : "hello-world",
+    "expected_response": "Hello world",
+    "entities" : []
+    },
+    {
+      "utterance": "bye",
+      "intent" : "goodbye-world",
+      "expected_response": "Goodbye world",
+      "entities" : []
+    }
+  ]
+}
