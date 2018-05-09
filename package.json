@@ -25,7 +25,7 @@
   "scripts": {
     "start": "node index.js",
     "debug": "node $NODE_DEBUG_OPTION index.js",
-    "test": "mocha 'test/**/*.js' && ./node_modules/jscs/bin/jscs . && ./node_modules/jshint/bin/jshint ."
+    "test": "mocha 'test/**/*.js'"
   },
   "engines": {
     "node": "6.10.0"
