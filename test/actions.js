@@ -16,9 +16,14 @@ describe('actions', function() {
 
     describe('converse', function() {
         for (let test of utteranceFile.tests) {
-            it('intent ' + test.intent + ' with utterance: ' +  '\'' + test.utterance + '\'' + ', should return: '
-                + '\'' +test.expected_response + '\'', function(done) {
-
+            it('Test description: ' + test.testDescription +', intent ' + test.intent + ' with utterance: ' +  '\''
+                + test.utterance + '\'' + ', should return: '+ '\'' +test.expectedResponse + '\'', function(done) {
+                let attributes = {
+                    "intent": test.intent
+                };
+                for (let entity of test.entities) {
+                    attributes[entity.entity] = entity.value;
+                }
                 request(server)
                     .post('/v1/api/converse')
                     .send({
@@ -27,9 +32,7 @@ describe('actions', function() {
                         retext: test.utterance,
                         version: '1.0',
                         language: 'en-US',
-                        attributes: {
-                            intent: test.intent
-                        },
+                        attributes: attributes,
                         context: {
                             user: {
                                 id: '12345678',
@@ -52,8 +55,7 @@ describe('actions', function() {
                     .end(function(err, res) {
                         should.not.exist(err);
                         res.body.should.have.property('speech');
-                        res.body.speech.text.should.match(test.expected_response);
-                        res.body.should.have.property('deleteSkillSession').which.be.exactly(true);
+                        res.body.speech.text.should.match(test.expectedResponse);
                         done();
                     });
             });
@@ -91,8 +93,13 @@ describe('NLU', function() {
                     should.not.exist(err);
                     res.body.should.have.property('workspace');
                     res.body.should.have.property('credentials');
+                    res.body.credentials.should.have.property('url');
+                    res.body.credentials.should.have.property('version');
+                    res.body.credentials.should.have.property('version_date');
                     should.notEqual(res.body.credentials.username, 'your wcs username', 'Username is not set.');
                     should.notEqual(res.body.credentials.password, 'your wcs password', 'Password is not set.');
+                    should.notEqual(res.body.credentials.url, 'your wcs url', 'Url is not set.');
+                    should.equal(res.body.credentials.version, 'v1', 'Should be \'v1\'.');
                     done();
                 });
         });

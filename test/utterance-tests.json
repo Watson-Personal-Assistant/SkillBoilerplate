@@ -2,10 +2,11 @@
   "tests":
   [
     {
+    "testDescription": "Testing hello world",
     "utterance": "Hello",
     "intent" : "hello-world",
-    "expected_response": "Hello world",
-    "entities" : []
+    "entities" : [{"entity":"hello", "value": "world"}],
+    "expectedResponse": "Hello world"
     }
   ]
 }
