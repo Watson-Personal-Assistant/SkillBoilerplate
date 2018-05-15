@@ -18,16 +18,13 @@ require('dotenv').config();
 if(manifest.nlu.indexOf('wcs') > -1) {
     handler.initialize();
 }
-let newManifest = JSON.parse(JSON.stringify(manifest));
-//in case the nlu is handled in the skill - create nlu engines
-let index = newManifest.nlu.indexOf('skill');
-newManifest.nlu.splice(index, 1);
-if(index > -1) {
-    if(newManifest.nlu.length < 1) {
-        console.log('No Nlu engines selected, you need to add the nlu engines you want to use to manifest.nlu (along with "skill") ')
-    }
-    else {
-        factory.getNLUs(newManifest).then(updatedManifest => {
+if(manifest.nlu.indexOf('skill') !== -1) {
+    console.error('Please remove skill from the manifest\'s nlu field, skill evaluation is the default option');
+} else {
+    if (manifest.nlu.length < 1) {
+        console.error('No Nlu engines selected, you need to add the nlu engines you want to use to manifest.nlu')
+    } else {
+        factory.getNLUs(manifest).then(updatedManifest => {
             if (updatedManifest.nlu.regexp) {
                 updatedManifest.intents = require('./res/nlu/intents');
             }
