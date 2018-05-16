@@ -22,7 +22,7 @@ if(manifest.nlu.indexOf('skill') !== -1) {
     console.error('Please remove skill from the manifest\'s nlu field, skill evaluation is the default option');
 } else {
     if (manifest.nlu.length < 1) {
-        console.error('No Nlu engines selected, you need to add the nlu engines you want to use to manifest.nlu')
+        console.error('No Nlu engines selected, you need to add the nlu engines you want to use to manifest.json nlu field')
     } else {
         factory.getNLUs(manifest).then(updatedManifest => {
             if (updatedManifest.nlu.regexp) {
