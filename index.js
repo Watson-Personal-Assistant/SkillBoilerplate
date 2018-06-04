@@ -18,8 +18,9 @@ require('dotenv').config();
 if(manifest.nlu.indexOf('wcs') > -1) {
     handler.initialize();
 }
-if(manifest.nlu.indexOf('skill') !== -1) {
-    console.error('Please remove skill from the manifest\'s nlu field, skill evaluation is the default option');
+let index = manifest.nlu.indexOf('skill');
+if(index !== -1) {
+    manifest.nlu.splice(index, 1);
 } else {
     if (manifest.nlu.length < 1) {
         console.error('No Nlu engines selected, you need to add the nlu engines you want to use to manifest.json nlu field')
