@@ -21,20 +21,19 @@ if(manifest.nlu.indexOf('wcs') > -1) {
 let index = manifest.nlu.indexOf('skill');
 if(index !== -1) {
     manifest.nlu.splice(index, 1);
+}
+if (manifest.nlu.length < 1) {
+    console.error('No Nlu engines selected, you need to add the nlu engines you want to use to manifest.json nlu field')
 } else {
-    if (manifest.nlu.length < 1) {
-        console.error('No Nlu engines selected, you need to add the nlu engines you want to use to manifest.json nlu field')
-    } else {
-        factory.getNLUs(manifest).then(updatedManifest => {
-            if (updatedManifest.nlu.regexp) {
-                updatedManifest.intents = require('./res/nlu/intents');
-            }
-            handler.manifest = updatedManifest;
-            factory.createAll(updatedManifest).then(function (engines) {
-                handler.engines = engines;
-            });
+    factory.getNLUs(manifest).then(updatedManifest => {
+        if (updatedManifest.nlu.regexp) {
+            updatedManifest.intents = require('./res/nlu/intents');
+        }
+        handler.manifest = updatedManifest;
+        factory.createAll(updatedManifest).then(function (engines) {
+            handler.engines = engines;
         });
-    }
+    });
 }
 
 // The expertise handler
