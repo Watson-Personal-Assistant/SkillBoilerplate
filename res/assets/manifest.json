@@ -9,7 +9,7 @@
     "en-US"
   ],
   "nlu": [
-    "regexp", "wcs"
+    "wcs", "regexp", "skill"
   ],
   "tags": [
     "hello world"
