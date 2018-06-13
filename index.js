@@ -18,14 +18,15 @@ require('dotenv').config();
 if(manifest.nlu.indexOf('wcs') > -1) {
     handler.initialize();
 }
-let index = manifest.nlu.indexOf('skill');
+let localManifest = JSON.parse(JSON.stringify(manifest));
+let index = localManifest.nlu.indexOf('skill');
 if(index !== -1) {
-    manifest.nlu.splice(index, 1);
+    localManifest.nlu.splice(index, 1);
 }
-if (manifest.nlu.length < 1) {
+if (localManifest.nlu.length < 1) {
     console.error('No Nlu engines selected, you need to add the nlu engines you want to use to manifest.json nlu field')
 } else {
-    factory.getNLUs(manifest).then(updatedManifest => {
+    factory.getNLUs(localManifest).then(updatedManifest => {
         if (updatedManifest.nlu.regexp) {
             updatedManifest.intents = require('./res/nlu/intents');
         }
