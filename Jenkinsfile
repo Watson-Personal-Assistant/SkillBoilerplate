@@ -14,10 +14,10 @@ node {
 
         // Should get that as a parameter if available - if not get pre-release
         try {
-            def sdkBranch = "https://github.ibm.com/ConsumerIoT/sagan-dev-node-sdk.git#${branchName}"
+            def sdkBranch = "https://github.com/Watson-Personal-Assistant/skill-sdk-nodejs.git#${branchName}"
             sh "npm install $sdkBranch"
         } catch (Exception e) {
-            def sdkBranch = "https://github.ibm.com/ConsumerIoT/sagan-dev-node-sdk.git#pre-release"
+            def sdkBranch = "https://github.com/Watson-Personal-Assistant/skill-sdk-nodejs.git#pre-release"
             sh "npm install $sdkBranch"
         }
     }
