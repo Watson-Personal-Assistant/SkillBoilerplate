@@ -12,12 +12,12 @@ const skillManifest = require(process.env.skillSDKResDir + '/assets/manifest');
 // Bring the actions
 require('..');
 
-describe('actions', function() {
+describe('actions', function () {
 
-    describe('converse', function() {
+    describe('converse', function () {
         for (let test of utteranceFile.tests) {
-            it('Test description: ' + test.testDescription +', intent ' + test.intent + ' with utterance: ' +  '\''
-                + test.utterance + '\'' + ', should return: '+ '\'' +test.expectedResponse + '\'', function(done) {
+            it('Test description: ' + test.testDescription + ', intent ' + test.intent + ' with utterance: ' + '\''
+                + test.utterance + '\'' + ', should return: ' + '\'' + test.expectedResponse + '\'', function (done) {
                 let attributes = {
                     "intent": test.intent
                 };
@@ -43,8 +43,7 @@ describe('actions', function() {
                             },
                             session: {
                                 new: true,
-                                attributes: {
-                                },
+                                attributes: {},
                                 version: '1.0'
                             }
                         }
@@ -52,7 +51,7 @@ describe('actions', function() {
                     .set('Accept', 'application/json')
                     .expect('Content-Type', /json/)
                     .expect(200)
-                    .end(function(err, res) {
+                    .end(function (err, res) {
                         should.not.exist(err);
                         res.body.should.have.property('speech');
                         res.body.speech.text.should.match(test.expectedResponse);
@@ -63,14 +62,14 @@ describe('actions', function() {
     });
 
 });
-describe('Manifest', function() {
-    it('Exists', function(done) {
+describe('Manifest', function () {
+    it('Exists', function (done) {
         request(server)
             .get('/v1/api/manifest')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 should.not.exist(err);
                 res.body.should.have.property('author');
                 res.body.should.have.property('description');
@@ -81,8 +80,8 @@ describe('Manifest', function() {
             });
     });
 });
-describe('NLU', function() {
-    if(skillManifest.nlu.indexOf('wcs') !== -1) {
+describe('NLU', function () {
+    if (skillManifest.nlu.indexOf('wcs') !== -1) {
         it('wcs', function (done) {
             request(server)
                 .get('/v1/api/nlu?type=wcs')
@@ -96,15 +95,15 @@ describe('NLU', function() {
                     res.body.credentials.should.have.property('url');
                     res.body.credentials.should.have.property('version');
                     res.body.credentials.should.have.property('version_date');
-                    should.notEqual(res.body.credentials.username, 'your wcs username', 'Username is not set.');
-                    should.notEqual(res.body.credentials.password, 'your wcs password', 'Password is not set.');
-                    should.notEqual(res.body.credentials.url, 'your wcs url', 'Url is not set.');
-                    should.equal(res.body.credentials.version, 'v1', 'Should be \'v1\'.');
+                    should.exist(res.body.credentials.username);
+                    should.exist(res.body.credentials.password);
+                    should.exist(res.body.credentials.url);
+                    should.exist(res.body.credentials.version);
                     done();
                 });
         });
     }
-    if(skillManifest.nlu.indexOf('regexp') !== -1) {
+    if (skillManifest.nlu.indexOf('regexp') !== -1) {
         it('regexp', function (done) {
             request(server)
                 .get('/v1/api/nlu?type=regexp')
@@ -117,20 +116,20 @@ describe('NLU', function() {
                 });
         });
     }
-    it('intents', function(done) {
+    it('intents', function (done) {
         request(server)
             .get('/v1/api/intents')
             .set('Accept', 'application/json')
             .expect('Content-Type', /json/)
             .expect(200)
-            .end(function(err, res) {
+            .end(function (err, res) {
                 should.not.exist(err);
                 done();
             });
     });
 });
-describe('Healthcheck', function() {
-    it('Healthcheck', function(done) {
+describe('Healthcheck', function () {
+    it('Healthcheck', function (done) {
         request(server)
             .get('/v1/api/healthcheck')
             .set('Accept', 'application/json')
