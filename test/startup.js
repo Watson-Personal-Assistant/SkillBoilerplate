@@ -9,7 +9,7 @@ capcon.startCapture(process.stdout, function(stdout) {
 });
 
 
-describe.only('Index', function() {
+describe('Index', function() {
     this.timeout(10000);
 
     after(function(done) {
