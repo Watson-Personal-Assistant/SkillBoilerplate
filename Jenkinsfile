@@ -1,6 +1,8 @@
 node {
     def branchName = (env.CHANGE_BRANCH == null) ? env.BRANCH_NAME : env.CHANGE_BRANCH
     def gitURL = 'https://github.com/Watson-Personal-Assistant/SkillBoilerplate.git'
+    def (folderName, jobName) = env.JOB_NAME.tokenize('/')
+    def boilerplateName = 'Skill-Boilerplate'
 
     stage('Get the code') {
         checkout([$class: 'GitSCM', branches: [[name: "${branchName}"]], doGenerateSubmoduleConfigurations: false, extensions: [[$class: 'LocalBranch', localBranch: "**"]], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '15eceab6-eceb-4b2b-b62d-6796f9b63acd', url: "${gitURL}"]]])
@@ -25,6 +27,8 @@ node {
         // lint here
     }
     stage('npm test') {
-        sh 'npm test'
+        def ciMode = (folderName == boilerplateName);
+
+        sh "isCI=$ciMode npm test"
     }
 }

@@ -20,12 +20,14 @@
     "jshint": "^2.9.4",
     "mocha": "^3.2.0",
     "should": "^7.1.0",
-    "supertest": "^1.0.0"
+    "supertest": "^1.0.0",
+    "capture-console": "^1.0.1"
   },
   "scripts": {
     "start": "node index.js",
     "debug": "node $NODE_DEBUG_OPTION index.js",
-    "test": "mocha 'test/**/*.js'"
+    "test": "mocha 'test/**/*.js'",
+    "test-bp": "isCI=false mocha 'test/**/*.js'"
   },
   "engines": {
     "node": "8.9.4",
