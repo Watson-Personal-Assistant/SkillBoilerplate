@@ -1,3 +1,5 @@
+properties([[$class: 'BuildBlockerProperty', blockLevel: 'GLOBAL', blockingJobs: '', scanQueueFor: 'ALL', useBuildBlocker: true], disableConcurrentBuilds(), [$class: 'RebuildSettings', autoRebuild: false, rebuildDisabled: false], parameters([string(defaultValue: 'pre-release', description: 'The SDK Branch to install', name: 'sdkBuildBranch', trim: false)]), [$class: 'ThrottleJobProperty', categories: [], limitOneJobWithMatchingParams: false, maxConcurrentPerNode: 0, maxConcurrentTotal: 0, paramsToUseForLimit: '', throttleEnabled: false, throttleOption: 'project']])
+
 node {
     def branchName = (env.CHANGE_BRANCH == null) ? env.BRANCH_NAME : env.CHANGE_BRANCH
     def gitURL = 'https://github.com/Watson-Personal-Assistant/SkillBoilerplate.git'
@@ -14,14 +16,8 @@ node {
     stage('replace with current skill-sdk pr') {
         sh "npm uninstall skill-sdk-nodejs"
 
-        // Should get that as a parameter if available - if not get pre-release
-        try {
-            def sdkBranch = "https://github.com/Watson-Personal-Assistant/skill-sdk-nodejs.git#${branchName}"
-            sh "npm install $sdkBranch"
-        } catch (Exception e) {
-            def sdkBranch = "https://github.com/Watson-Personal-Assistant/skill-sdk-nodejs.git#pre-release"
-            sh "npm install $sdkBranch"
-        }
+        def sdkBranch = "https://github.com/Watson-Personal-Assistant/skill-sdk-nodejs.git#${params.sdkBuildBranch}"
+        sh "npm install $sdkBranch"
     }
     stage('Lint it') {
         // lint here
