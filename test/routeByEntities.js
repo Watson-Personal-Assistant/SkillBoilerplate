@@ -10,7 +10,7 @@ const {server} = require('skill-sdk-nodejs');
 const {handler} = require('skill-sdk-nodejs');
 
 
-describe.only('Test routeByEntities flag', function () {
+describe('Test routeByEntities flag', function () {
     this.timeout(10000);
 
     it('set routeByEntitiesFlag to false in manifest', function (done) {
