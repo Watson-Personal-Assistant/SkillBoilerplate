@@ -92,11 +92,7 @@ describe('NLU', function () {
                     should.not.exist(err);
                     res.body.should.have.property('workspace');
                     res.body.should.have.property('credentials');
-                    res.body.credentials.should.have.property('url');
-                    res.body.credentials.should.have.property('version');
-                    res.body.credentials.should.have.property('version_date');
-                    should.exist(res.body.credentials.username);
-                    should.exist(res.body.credentials.password);
+                    should.exist(res.body.credentials.iam_apikey);
                     should.exist(res.body.credentials.url);
                     should.exist(res.body.credentials.version);
                     done();
