@@ -186,7 +186,7 @@ This defines the format of the response that that the skill should return to the
   "version": "string",
   "reject": "boolean",
   "error": "number",
-  "shouldEndSession": "boolean",
+  "deleteSkillSession": "boolean",
   "speech": {
     "text": "string",
     "display": "string",
@@ -219,7 +219,7 @@ Parameter | Description | Type | Required
 --- | --- | --- | ---
 version | Response version | string | yes
 reject | | boolean | yes
-shouldEndSession | | boolean | yes
+deleteSkillSession | | boolean | yes
 context | | object | yes
 
 #### Speech Object
