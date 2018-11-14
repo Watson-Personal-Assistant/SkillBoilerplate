@@ -5,7 +5,6 @@
 'use strict';
 
 const should = require('should');
-const {server} = require('skill-sdk-nodejs');
 const {handler} = require('skill-sdk-nodejs');
 
 describe('Test builtInContext set/get/delete/validate', function () {
