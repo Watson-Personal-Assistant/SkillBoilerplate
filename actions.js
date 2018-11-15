@@ -83,19 +83,6 @@ let evaluationCallback = function(result, evaluationResponse, context, err) {
 
 // Actions for DEFAULT state
 const stateDefaultActions = handler.createActionsHandler({
-
-    // this is an example of an intent using a regex engine, the intent catches the phrase "hello"
-    'hello-world': (request, response, context) => {
-        response.say(handler.t('HELLO_WORLD')).send();
-    },
-    //this is an example of an intent using wcs - in order for this to work you need your own wcs workspace and intents
-    //and change the intents name with your own
-    'hello-world-wcs': (request, response, context) => {
-        handler.converse(request, response, context, converseCallback);
-    },
-    'unhandled': (request, response, context) => {
-        response.say(handler.t('TRY_AGAIN')).send();
-    },
     //pre processing before the request evaluation
     evaluation: (request, evaluationResponse, context) => {
         handler.evaluateRequest(request, evaluationResponse, context, evaluationCallback);
@@ -103,6 +90,24 @@ const stateDefaultActions = handler.createActionsHandler({
     // this is the entities action, routing by entity will lead here
     entities: (request, response, context) => {
         handler.converse(request, response, context, converseCallback);
+    },
+    // this is an example of an intent using a regex engine, the intent catches the phrase "hello"
+    'hello-world': (request, response, context) => {
+        response.say(handler.t('HELLO_WORLD')).send();
+    },
+    //this is an example of an intent using wcs - in order for this to work you need your own wcs workspace and intents
+    //and change the intents name with your own
+    'hello-world-wcs': (request, response, context) => {
+        // this is how you directly call WA using the handler
+        handler.converse(request, response, context, converseCallback);
+        // alternatively you can use the response from the evaluation
+        // first save the context from the evaluation
+        handler.saveEvaluationContext(context, request.evaluationResponse.context);
+        // then return the answer from the nlu engine
+        response.say(request.evaluationResponse.response).send();
+    },
+    'unhandled': (request, response, context) => {
+        response.say(handler.t('TRY_AGAIN')).send();
     }
 
 }, 'DEFAULT');
