@@ -90,7 +90,7 @@ describe('Test builtInContext set/get/delete/validate', function () {
         it('Try setting invalid built-in context property path', function (done) {
             const result = handler.setBuiltInContextProperty(dummyValidContext, invalidPath, dummyValue);
             result.valid.should.equal(false);
-            result.status.should.equal(400);
+            result.status.should.equal(404);
             done()
         });
         it('Try setting valid built-in context property path', function(done) {
