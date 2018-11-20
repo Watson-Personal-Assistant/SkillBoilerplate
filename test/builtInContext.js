@@ -17,7 +17,7 @@ describe('Test builtInContext set/get/delete/validate', function () {
     let dummyInvalidValue;
     beforeEach(function (done){
         dummyValidContext = {
-            "builtIn": {
+            "builtin": {
                 "currentConversation": {
                     "@type": "http://www.ibm.com/watson-assistant-solutions/ontology/Conversation",
                     "lastReferencedLocation": {
@@ -43,7 +43,7 @@ describe('Test builtInContext set/get/delete/validate', function () {
             }
         };
 
-        dummyInvalidContext = { "builtIn": {"Dsfds": "Sdfs"}};
+        dummyInvalidContext = { "builtin": {"Dsfds": "Sdfs"}};
         validPath = "currentConversation.lastReferencedLocation";
         invalidPath = "currentConversation.hello.world";
         dummyValue = {
@@ -116,7 +116,7 @@ describe('Test builtInContext set/get/delete/validate', function () {
         it('Try getting built-in context with valid property path', function(done) {
             const result = handler.getBuiltInContextProperty(dummyValidContext, validPath);
             result.valid.should.equal(true);
-            JSON.stringify(result.value).should.equal(JSON.stringify(dummyValidContext.builtIn.currentConversation.lastReferencedLocation));
+            JSON.stringify(result.value).should.equal(JSON.stringify(dummyValidContext.builtin.currentConversation.lastReferencedLocation));
             done();
         })
     });
@@ -132,8 +132,8 @@ describe('Test builtInContext set/get/delete/validate', function () {
             const result = handler.deleteBuiltInContextProperty(dummyValidContext, validPath);
             result.valid.should.equal(true);
             result.status.should.equal(200);
-            delete dummyValidContext.builtIn.currentConversation.lastReferencedLocation;
-            result.obj.should.deepEqual(dummyValidContext.builtIn);
+            delete dummyValidContext.builtin.currentConversation.lastReferencedLocation;
+            result.obj.should.deepEqual(dummyValidContext.builtin);
             done();
         })
     });
