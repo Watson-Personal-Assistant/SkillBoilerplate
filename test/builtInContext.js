@@ -102,6 +102,7 @@ describe('Test builtInContext set/get/delete/validate', function () {
         it('Try setting invalid built-in context property value', function(done) {
             const result = handler.setBuiltInContextProperty(dummyValidContext, validPath, dummyInvalidValue);
             result.valid.should.equal(false);
+            JSON.stringify(result.obj).should.equal(JSON.stringify(dummyValidContext.builtin));
             done();
         })
     });
@@ -111,6 +112,7 @@ describe('Test builtInContext set/get/delete/validate', function () {
             const result = handler.getBuiltInContextProperty(dummyValidContext, invalidPath);
             result.valid.should.equal(false);
             result.status.should.equal(400);
+            result.should.not.have.property('obj');
             done();
         });
         it('Try getting built-in context with valid property path', function(done) {
@@ -126,6 +128,7 @@ describe('Test builtInContext set/get/delete/validate', function () {
             const result = handler.deleteBuiltInContextProperty(dummyValidContext, invalidPath);
             result.valid.should.equal(false);
             result.status.should.equal(404);
+            result.should.not.have.property('obj');
             done();
         });
         it('Try deleting built in context with valid path', function(done) {
@@ -135,7 +138,7 @@ describe('Test builtInContext set/get/delete/validate', function () {
             delete dummyValidContext.builtin.currentConversation.lastReferencedLocation;
             result.obj.should.deepEqual(dummyValidContext.builtin);
             done();
-        })
+        });
     });
 
     describe('Test validate built in context', function(){
