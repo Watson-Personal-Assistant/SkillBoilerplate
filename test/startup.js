@@ -10,8 +10,6 @@ capcon.startCapture(process.stdout, function(stdout) {
     output += stdout;
 });
 
-// const index = require('../index');
-
 describe('Index', function() {
     this.timeout(10000);
 
