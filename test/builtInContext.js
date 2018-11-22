@@ -88,19 +88,19 @@ describe('Test builtInContext set/get/delete/validate', function () {
 
     describe('Test set built-in context', function() {
         it('Try setting invalid built-in context property path', function (done) {
-            const result = handler.setBuiltInContextProperty(dummyValidContext, invalidPath, dummyValue);
+            const result = handler.setBuiltinContextProperty(dummyValidContext, invalidPath, dummyValue);
             result.valid.should.equal(false);
             result.status.should.equal(404);
             done()
         });
         it('Try setting valid built-in context property path', function(done) {
-            const result = handler.setBuiltInContextProperty(dummyValidContext, validPath, dummyValue);
+            const result = handler.setBuiltinContextProperty(dummyValidContext, validPath, dummyValue);
             result.valid.should.equal(true);
             JSON.stringify(result.obj.currentConversation.lastReferencedLocation).should.equal(JSON.stringify(dummyValue));
             done();
         });
         it('Try setting invalid built-in context property value', function(done) {
-            const result = handler.setBuiltInContextProperty(dummyValidContext, validPath, dummyInvalidValue);
+            const result = handler.setBuiltinContextProperty(dummyValidContext, validPath, dummyInvalidValue);
             result.valid.should.equal(false);
             JSON.stringify(result.obj).should.equal(JSON.stringify(dummyValidContext.builtin));
             done();
@@ -109,14 +109,14 @@ describe('Test builtInContext set/get/delete/validate', function () {
 
     describe('Test get built-in context', function() {
         it('Try getting built-in context with invalid property path', function(done) {
-            const result = handler.getBuiltInContextProperty(dummyValidContext, invalidPath);
+            const result = handler.getBuiltinContextProperty(dummyValidContext, invalidPath);
             result.valid.should.equal(false);
             result.status.should.equal(400);
             result.should.not.have.property('obj');
             done();
         });
         it('Try getting built-in context with valid property path', function(done) {
-            const result = handler.getBuiltInContextProperty(dummyValidContext, validPath);
+            const result = handler.getBuiltinContextProperty(dummyValidContext, validPath);
             result.valid.should.equal(true);
             JSON.stringify(result.value).should.equal(JSON.stringify(dummyValidContext.builtin.currentConversation.lastReferencedLocation));
             done();
@@ -125,14 +125,14 @@ describe('Test builtInContext set/get/delete/validate', function () {
 
     describe('Test delete built in context', function(){
         it('Try deleting built in context with invalid path', function(done) {
-            const result = handler.deleteBuiltInContextProperty(dummyValidContext, invalidPath);
+            const result = handler.deleteBuiltinContextProperty(dummyValidContext, invalidPath);
             result.valid.should.equal(false);
             result.status.should.equal(404);
             result.should.not.have.property('obj');
             done();
         });
         it('Try deleting built in context with valid path', function(done) {
-            const result = handler.deleteBuiltInContextProperty(dummyValidContext, validPath);
+            const result = handler.deleteBuiltinContextProperty(dummyValidContext, validPath);
             result.valid.should.equal(true);
             result.status.should.equal(200);
             delete dummyValidContext.builtin.currentConversation.lastReferencedLocation;
@@ -143,12 +143,12 @@ describe('Test builtInContext set/get/delete/validate', function () {
 
     describe('Test validate built in context', function(){
         it('Check validation of invalid built in context', function(done) {
-            const result = handler.validateBuiltInContext(dummyInvalidContext);
+            const result = handler.validateBuiltinContext(dummyInvalidContext);
             result.valid.should.equal(false);
             done();
         });
         it('Check validation of valid built in context', function(done) {
-            const result = handler.validateBuiltInContext(dummyValidContext);
+            const result = handler.validateBuiltinContext(dummyValidContext);
             result.valid.should.equal(true);
             done();
         })
