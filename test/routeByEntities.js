@@ -6,12 +6,19 @@
 
 const should = require('should');
 const request = require('supertest');
-const {server} = require('skill-sdk-nodejs');
 const {handler} = require('skill-sdk-nodejs');
+const {server} = require('skill-sdk-nodejs');
+const startEngines = require('../startEngines');
 
 
 describe('Test routeByEntities flag', function () {
     this.timeout(10000);
+
+    before(function(done) {
+        startEngines.startEngines(() => {
+            done();
+        })
+    });
 
     it('set routeByEntitiesFlag to false in manifest', function (done) {
         handler.manifest.routeByEntities = false;
