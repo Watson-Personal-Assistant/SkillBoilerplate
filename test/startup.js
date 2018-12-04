@@ -1,16 +1,23 @@
 const should = require('should');
-const {server} = require('skill-sdk-nodejs');
 const skillManifest = require(process.env.skillSDKResDir + '/assets/manifest');
 const capcon = require('capture-console');
+const startEngines = require('../startEngines');
+
+
 const isCI = process.env.isCI;
 let output = '';
 capcon.startCapture(process.stdout, function(stdout) {
     output += stdout;
 });
 
-
 describe('Index', function() {
     this.timeout(10000);
+
+    before(function(done) {
+        startEngines.startEngines(() => {
+            done();
+        })
+    });
 
     after(function(done) {
         capcon.stopCapture(process.stdout);
