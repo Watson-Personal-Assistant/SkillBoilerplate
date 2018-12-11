@@ -7,20 +7,6 @@
     "intent" : "hello-world",
     "entities" : [{"entity":"hello", "value": "world"}],
     "expectedResponse": "Hello world"
-    },
-    {
-      "testDescription": "Testing visibility != hidden",
-      "utterance": "Hello",
-      "intent" : "hello-world",
-      "entities" : [{"entity":"hello", "value": "world"}],
-      "expectedResponse": "Hello world"
-    },
-    {
-      "testDescription": "Testing visibility = hidden",
-      "utterance": "Goodbye",
-      "intent" : "goodbye-world",
-      "entities" : [{"entity":"goodbye", "value": "world"}],
-      "expectedResponse": "Sorry, please try again later"
     }
   ]
 }
